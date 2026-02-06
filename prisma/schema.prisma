@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  password  String
+  name      String?
+  favorites Favorite[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Bull {
+  id                      Int        @id @default(autoincrement())
+  caravana                String     @unique
+  nombre                  String
+  uso                     String     // 'vaquillona' | 'vaca'
+  origen                  String     // 'propio' | 'catalogo'
+  pelaje                  String     // 'negro' | 'colorado'
+  raza                    String
+  edad_meses              Int
+  caracteristica_destacada String?
+
+  // Stats columns (0-100)
+  crecimiento             Int
+  facilidad_parto         Int
+  reproduccion            Int
+  moderacion              Int
+  carcasa                 Int
+
+  favorites Favorite[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  bull_score Float @default(0)
+
+  // @@index([bullScore]) // Placeholder for future index if we persist score
+  // For now, we calculate dynamic score, but might want to index columns used in filters
+  @@index([uso])
+  @@index([origen])
+  @@index([pelaje])
+}
+
+model Favorite {
+  userId    Int
+  bullId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  bull      Bull     @relation(fields: [bullId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@id([userId, bullId])
+}
