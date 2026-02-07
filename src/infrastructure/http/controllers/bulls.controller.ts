@@ -26,18 +26,6 @@ export class BullsController {
 
         const userId = req?.user?.userId ? Number(req.user.userId) : undefined;
 
-        // The following lines are added based on the provided Code Edit,
-        // assuming 'sort' and 'Prisma' context would be available if this were a repository or service.
-        // As this is a controller, 'sort' and 'Prisma' are not defined here.
-        // This might indicate the Code Edit was intended for a different file or requires additional context.
-        // For now, I'm adding the log as requested, but 'orderBy' will be undefined.
-        // Default sort by id asc if no sort provided
-        // const orderBy: Prisma.BullOrderByWithRelationInput = sort 
-        //   ? { [sort.sortBy]: sort.order } 
-        //   : { id: 'asc' };
-
-        // console.log('Repo OrderBy:', JSON.stringify(orderBy)); // This will log 'undefined' for 'orderBy'
-
         return this.getBullsUseCase.execute(
             { search, origen: origen as BullOrigin, uso: uso as BullUse, pelaje: pelaje as BullCoat },
             { page: pageNum, limit: limitNum },

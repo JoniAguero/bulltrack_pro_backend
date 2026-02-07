@@ -21,7 +21,7 @@ const BULLS_DATA = [
             moderacion: 60,
             carcasa: 82
         },
-        bullScore: 0 // Calculated later or via logic
+        bullScore: 0
     },
     {
         id: 2,
@@ -142,7 +142,6 @@ const BULLS_DATA = [
 async function main() {
     console.log('Seeding database...');
 
-    // 1. Upsert User
     const password = await bcrypt.hash('seed28', 10);
     const user = await prisma.user.upsert({
         where: { email: 'admin@seed28.com' },
@@ -155,7 +154,6 @@ async function main() {
     });
     console.log({ user });
 
-    // 2. Upsert Bulls
     for (const b of BULLS_DATA) {
         const { crecimiento, facilidad_parto, reproduccion, moderacion, carcasa } = b.stats;
         const score =

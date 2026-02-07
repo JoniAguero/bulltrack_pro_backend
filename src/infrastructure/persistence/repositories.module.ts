@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaBullRepository } from './prisma/repositories/prisma-bull.repository';
 
-// Define the token for Dependency Injection
 export const BULL_REPOSITORY_TOKEN = 'BULL_REPOSITORY_TOKEN';
 export const FAVORITE_REPOSITORY_TOKEN = 'FAVORITE_REPOSITORY_TOKEN';
 

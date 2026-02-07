@@ -30,9 +30,11 @@ export class Bull {
         }
     }
 
+
+    // Se calcula el score del toro en la entidad para tenerlo actualizado siempre si llega a cambiar la fórmula
     calculateScore(): number {
         const { crecimiento, facilidad_parto, reproduccion, moderacion, carcasa } = this.stats;
-        // bullScore = (C * 0.30) + (F * 0.25) + (R * 0.20) + (M * 0.15) + (Ca * 0.10)
+
         const score =
             (crecimiento * 0.30) +
             (facilidad_parto * 0.25) +
@@ -40,7 +42,6 @@ export class Bull {
             (moderacion * 0.15) +
             (carcasa * 0.10);
 
-        // Return rounded to 2 decimals
         return Math.round(score * 100) / 100;
     }
 }

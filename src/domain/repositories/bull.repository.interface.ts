@@ -1,7 +1,7 @@
 import { Bull, BullCoat, BullOrigin, BullUse } from '../entities/bull.entity';
 
 export interface BullFilters {
-    search?: string; // caravana or nombre
+    search?: string;
     minAge?: number;
     maxAge?: number;
     origen?: BullOrigin;
@@ -24,5 +24,4 @@ export interface PaginatedResult<T> {
 export interface IBullRepository {
     findAll(filters: BullFilters, pagination: PaginationParams, sort?: { sortBy: string; order: 'asc' | 'desc' }, userId?: number): Promise<PaginatedResult<Bull>>;
     findById(id: number): Promise<Bull | null>;
-    // Future methods: findByIds, etc.
 }

@@ -15,7 +15,6 @@ export class PrismaFavoriteRepository implements IFavoriteRepository {
                 bullId,
             },
         }).catch((error: any) => {
-            // Ignore if already exists (P2002)
             if (error.code !== 'P2002') throw error;
         });
     }

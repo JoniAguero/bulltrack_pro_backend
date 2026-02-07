@@ -16,16 +16,14 @@ export class PrismaBullRepository implements IBullRepository {
 
         const where: Prisma.BullWhereInput = this.buildWhereClause(filters);
 
-        // Default sort by id asc if no sort provided
         const orderBy: Prisma.BullOrderByWithRelationInput = sort
             ? { [sort.sortBy]: sort.order }
             : { id: 'asc' };
 
-        // If userId is provided, include favorites relation filtered by userId
         const include = userId ? {
             favorites: {
                 where: { userId },
-                select: { userId: true } // Only need to see if it exists
+                select: { userId: true }
             }
         } : undefined;
 
@@ -45,7 +43,7 @@ export class PrismaBullRepository implements IBullRepository {
         const mappedData = data.map((item: any) => {
             const isFavorite = userId && item.favorites?.length > 0;
             const domainBull = BullMapper.toDomain(item);
-            // Re-instantiate with isFavorite if true, otherwise default false is fine
+
             if (isFavorite) {
                 return new Bull(
                     domainBull.id,
@@ -100,8 +98,6 @@ export class PrismaBullRepository implements IBullRepository {
         if (filters.pelaje) {
             where.pelaje = filters.pelaje;
         }
-
-        // Ages can be added later if needed
 
         return where;
     }

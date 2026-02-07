@@ -20,10 +20,8 @@ export class BullMapper {
                 carcasa: prismaBull.carcasa,
             },
             prismaBull.caracteristica_destacada,
-            // We will map bullScore if it exists on the prisma object (e.g. from raw query) or default to logic later.
-            // For now, assuming it's not persisted in this step.
             undefined,
-            undefined // isFavorite placeholder
+            undefined
         );
     }
 }

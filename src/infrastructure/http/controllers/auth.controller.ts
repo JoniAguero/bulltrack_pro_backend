@@ -8,7 +8,6 @@ export class AuthController {
     @HttpCode(HttpStatus.OK)
     @Post('login')
     async login(@Body() loginDto: Record<string, any>) {
-        // Simple validation inline for now, or assume DTO
         if (!loginDto.email || !loginDto.password) {
             throw new Error('Email and password are required');
         }
