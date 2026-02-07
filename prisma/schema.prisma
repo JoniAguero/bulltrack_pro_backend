@@ -12,36 +12,31 @@ model User {
   email     String     @unique
   password  String
   name      String?
-  favorites Favorite[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  favorites Favorite[]
 }
 
 model Bull {
-  id                      Int        @id @default(autoincrement())
-  caravana                String     @unique
-  nombre                  String
-  uso                     String     // 'vaquillona' | 'vaca'
-  origen                  String     // 'propio' | 'catalogo'
-  pelaje                  String     // 'negro' | 'colorado'
-  raza                    String
-  edad_meses              Int
+  id                       Int        @id @default(autoincrement())
+  caravana                 String     @unique
+  nombre                   String
+  uso                      String
+  origen                   String
+  pelaje                   String
+  raza                     String
+  edad_meses               Int
   caracteristica_destacada String?
+  crecimiento              Int
+  facilidad_parto          Int
+  reproduccion             Int
+  moderacion               Int
+  carcasa                  Int
+  createdAt                DateTime   @default(now())
+  updatedAt                DateTime   @updatedAt
+  bull_score               Float      @default(0)
+  favorites                Favorite[]
 
-  // Stats columns (0-100)
-  crecimiento             Int
-  facilidad_parto         Int
-  reproduccion            Int
-  moderacion              Int
-  carcasa                 Int
-
-  favorites Favorite[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  bull_score Float @default(0)
-
-  // @@index([bullScore]) // Placeholder for future index if we persist score
-  // For now, we calculate dynamic score, but might want to index columns used in filters
   @@index([uso])
   @@index([origen])
   @@index([pelaje])
@@ -50,9 +45,9 @@ model Bull {
 model Favorite {
   userId    Int
   bullId    Int
-  user      User     @relation(fields: [userId], references: [id])
-  bull      Bull     @relation(fields: [bullId], references: [id])
   createdAt DateTime @default(now())
+  bull      Bull     @relation(fields: [bullId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@id([userId, bullId])
 }

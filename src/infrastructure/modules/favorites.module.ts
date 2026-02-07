@@ -4,9 +4,10 @@ import { FavoritesController } from '../http/controllers/favorites.controller';
 import { AddFavoriteUseCase } from '../../application/use-cases/add-favorite.use-case';
 import { RemoveFavoriteUseCase } from '../../application/use-cases/remove-favorite.use-case';
 import { GetUserFavoritesUseCase } from '../../application/use-cases/get-user-favorites.use-case';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-    imports: [RepositoriesModule],
+    imports: [RepositoriesModule, AuthModule],
     controllers: [FavoritesController],
     providers: [
         AddFavoriteUseCase,

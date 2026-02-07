@@ -7,6 +7,7 @@ export interface BullFilters {
     origen?: BullOrigin;
     uso?: BullUse;
     pelaje?: BullCoat;
+    favorites?: boolean;
 }
 
 export interface PaginationParams {

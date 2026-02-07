@@ -14,7 +14,9 @@ export class PrismaBullRepository implements IBullRepository {
         const { page, limit } = pagination;
         const skip = (page - 1) * limit;
 
-        const where: Prisma.BullWhereInput = this.buildWhereClause(filters);
+        const where: Prisma.BullWhereInput = this.buildWhereClause(filters, userId);
+
+        console.log(`PrismaBullRepository.findAll - userId: ${userId}, where: ${JSON.stringify(where)}`);
 
         const orderBy: Prisma.BullOrderByWithRelationInput = sort
             ? { [sort.sortBy]: sort.order }
@@ -77,7 +79,7 @@ export class PrismaBullRepository implements IBullRepository {
         return BullMapper.toDomain(bull);
     }
 
-    private buildWhereClause(filters: BullFilters): Prisma.BullWhereInput {
+    private buildWhereClause(filters: BullFilters, userId?: number): Prisma.BullWhereInput {
         const where: Prisma.BullWhereInput = {};
 
         if (filters.search) {
@@ -97,6 +99,12 @@ export class PrismaBullRepository implements IBullRepository {
 
         if (filters.pelaje) {
             where.pelaje = filters.pelaje;
+        }
+
+        if (filters.favorites && userId) {
+            where.favorites = {
+                some: { userId }
+            };
         }
 
         return where;
