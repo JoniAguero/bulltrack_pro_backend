@@ -29,14 +29,16 @@ COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
+# Copy the source to ensure prisma can find schema if needed in some contexts, 
+# although prisma generate already happened.
+COPY --from=builder /app/src ./src
 
 # Set environment variables
 ENV NODE_ENV=production
 
-# Expose the port (Railway/Render usually provide this but Nest uses it)
-EXPOSE 3001
+# Expose the port (Railway uses the PORT env var)
+# We don't hardcode EXPOSE to 3001 to avoid confusion, 
+# but Railway usually ignores this and uses the PORT env var.
 
-# Command to run the application
-# We use a shell form to ensure environment variables are expanded if needed, 
-# although in this case, we just run the production start script.
-CMD ["npm", "run", "start:prod"]
+# Command to run migrations and then the application
+CMD npx prisma migrate deploy && npm run start:prod
