@@ -46,5 +46,5 @@ ENV NODE_ENV=production
 # We don't hardcode EXPOSE to 3001 to avoid confusion, 
 # but Railway usually ignores this and uses the PORT env var.
 
-# Command to run migrations and then the application
-CMD npx prisma migrate deploy && npm run start:prod
+# Command to run migrations, seeding, and then the application
+CMD npx prisma migrate deploy && npx prisma db seed && npm run start:prod
